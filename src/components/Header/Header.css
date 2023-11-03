@@ -1,0 +1,123 @@
+.header {
+    background-color: #202020;
+    height: 74px;
+    display: flex;
+    padding: 0 70px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header_blue {    
+    background-color: #073042;
+}
+
+.header__flexbox {
+    display: flex;
+    gap: 45px;
+}
+
+.header__logo {
+    width: 38px;
+    cursor: pointer;
+}
+
+.header__logo:hover {
+    opacity: .7;
+    transition: opacity ease-out .3s;
+}
+
+.header__container {
+    display: flex;
+    align-items: center;
+}
+
+.header__container_movies {
+    gap: 16px;
+}
+
+.header__container_profile {
+    gap: 7px;
+}
+
+.header__container_auth {
+    gap: 30px;
+}
+
+.header__button {
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18px;
+}
+
+.header__button:hover {
+    opacity: .7;
+    transition: opacity ease-out .3s;
+}
+
+.header__profile-icon {
+    background-color: rgba(0, 0, 0, 0);
+    object-fit: none;
+    width: 26px;
+    height: 26px;
+    border-radius: 50px;
+}
+
+.header__profile-icon_blue {
+    background-color: #0F4157;
+}
+
+.header__button_sign-in {
+    padding: 8px 20px;
+    background-color: #3DDC84;
+    color: #000;
+    border-radius: 3px;
+}
+
+.header__menu {
+    background-color: rgba(0, 0, 0, 0);
+    border: 0;
+    width: 40px;
+    height: 43px;
+    background-size: contain;
+    background-image: url("./../../images/menu.svg");
+    cursor: pointer;
+}
+
+.header__menu:hover {
+    opacity: .7;
+    transition: opacity ease-out .3s;
+}
+
+@media screen and (max-width: 1023px) {
+    .header {
+        width: 92%;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .header {
+        width: 91%;
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .header__container_auth {
+        gap: 14px;
+    }
+
+    .header__button {
+        font-size: 10px;
+        line-height: 16px;
+    }
+
+    .header__button_sign-in {
+        width: 54px;
+        box-sizing: border-box;
+        height: 26px;
+        padding: 5px 12px;
+    }
+}
