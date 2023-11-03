@@ -13,29 +13,29 @@ function Profile(props) {
     return(
         <>
             <Header isLoggedIn={props.isLoggedIn} />
-            <div className="profile">
+            <main className="profile">
                 <h1 className="profile__greeting">Привет, Виталий!</h1>
                 <form className="profile__form">
                     <label className="profile__field">
-                        <div className="profile__container">
-                            <p className="profile__placeholder">Имя</p>
+                        <span className="profile__container">
+                            <span className="profile__placeholder">Имя</span>
                             {isFormEditable ?
                             <input className="profile__input profile__input_name"
-                            name="name" required /> :
-                            <p className="profile__input-value">Виталий</p>
+                            name="name" placeholder="Имя" required /> :
+                            <span className="profile__input-value">Виталий</span>
                             }
-                        </div>
+                        </span>
                         <span className="profile__input-error name-input-error"></span>
                     </label>
                     <label className="profile__field">
-                        <div className="profile__container profile__container_borderless">
-                            <p className="profile__placeholder">E-mail</p>
+                        <span className="profile__container profile__container_borderless">
+                            <span className="profile__placeholder">E-mail</span>
                             {isFormEditable ?
                             <input className="profile__input profile__input_email"
-                            type="email" name="email" required /> :
-                            <p className="profile__input-value">pochta@yandex.ru</p>
+                            type="email" name="email" placeholder="Почта" required /> :
+                            <span className="profile__input-value">pochta@yandex.ru</span>
                             }
-                        </div>
+                        </span>
                         <span className="profile__input-error email-input-error"></span>
                     </label>
                     {isFormEditable ?
@@ -47,7 +47,7 @@ function Profile(props) {
                     }
                 </form>
                 {!isFormEditable && <Link className="profile__sign-out" to="/sign-in">Выйти из аккаунта</Link>}
-            </div>
+            </main>
         </>
     )
 }

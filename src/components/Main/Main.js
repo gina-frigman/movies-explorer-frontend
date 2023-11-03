@@ -11,14 +11,14 @@ function Main(props) {
     return(
         <>
             <Header color="blue" isLoggedIn={props.isLoggedIn} />
-            <div className="main">
+            <main className="main">
                 <Promo />
                 <NavTab />
                 <AboutProject />
                 <Techs />
                 <AboutMe />
                 <Portfolio />
-            </div>
+            </main>
             <Footer />
         </>
     )

@@ -1,3 +1,8 @@
+.project {
+    background-color: #202020;
+    padding-bottom: 110px;
+}
+
 .project__header {
     margin: 0 70px 70px;
     padding: 110px 0 23px;
@@ -38,7 +43,7 @@
     grid-template-columns: 1fr 4fr;
     grid-template-rows: 36px 17px;
     row-gap: 14px;
-    margin: 0 70px 110px;
+    margin: 0 70px;
     justify-items: center;
 }
 
@@ -77,6 +82,10 @@
 }
 
 @media screen and (max-width: 1023px) {
+    .project {
+        padding-bottom: 90px;
+    }
+
     .project__header {
         padding-top: 90px;
         margin-left: 50px;
@@ -100,11 +109,14 @@
     .project__chart {
         margin-left: 50px;
         margin-right: 50px;
-        margin-bottom: 90px;
     }
 }
 
 @media screen and (max-width: 767px) {
+    .project {
+        padding-bottom: 70px;
+    }
+
     .project__header {
         font-size: 18px;
         margin: 0 18px 60px;
@@ -139,7 +151,6 @@
     .project__chart {
         margin-left: 18px;
         margin-right: 18px;
-        margin-bottom: 70px;
         row-gap: 10px;
         grid-template-columns: 2.2fr 4fr;
     }

@@ -20,7 +20,7 @@ function Header(props) {
     
     const returnDesktopHeader = () => {
         return(
-            <header className={`header ${props.color && "header_blue"}`}>
+            <header className={`header ${props.color ? "header_blue" : ""}`}>
                 {props.isLoggedIn ?
                     <>
                         <div className="header__flexbox">
@@ -50,7 +50,7 @@ function Header(props) {
 
     const returnMobileHeader = () => {
         return(
-            <header className={`header ${props.color && "header_blue"}`}>
+            <header className={`header ${props.color ? "header_blue" : ""}`}>
                 <img className="header__logo" src={headerLogo} alt="логотип" />
                 {props.isLoggedIn ?
                     isMenuOpen ?

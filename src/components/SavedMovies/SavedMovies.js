@@ -7,8 +7,10 @@ function SavedMovies(props) {
     return(
         <>
             <Header isLoggedIn={props.isLoggedIn} />
-            <SearchForm />
-            <MoviesCardList />
+            <main>
+                <SearchForm />
+                <MoviesCardList />
+            </main>
             <Footer />
         </>
     )

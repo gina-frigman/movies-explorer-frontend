@@ -11,6 +11,12 @@
     width: 38px;
     height: 38px;
     margin-bottom: 40px;
+    cursor: pointer;
+}
+
+.register__logo:hover {
+    opacity: .7;
+    transition: opacity ease-out .3s;
 }
 
 .register__greeting {
@@ -27,21 +33,18 @@
 }
 
 .register__field {
-    margin-bottom: 20px;
+    color: #8B8B8B;
+    font-size: 10px;
+    font-weight: 400;
+    margin: 0 0 20px;
 }
 
 .register__field:last-of-type {
     margin-bottom: 91px;    
 }
 
-.register__title {
-    color: #8B8B8B;
-    font-size: 10px;
-    font-weight: 400;
-    margin: 0 0 10px;
-}
-
 .register__input {
+    margin-top: 10px;
     color: #fff;
     background-color: #2f2f2f;
     border: 0;
@@ -70,6 +73,7 @@
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
+    border: 0;
 }
 
 .register__submit:hover {

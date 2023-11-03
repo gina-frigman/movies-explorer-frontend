@@ -4,26 +4,26 @@ import { Link } from "react-router-dom";
 
 function Register() {
     return(
-        <div className="register">
-            <img className="register__logo" src={logo} alt="логотип" />
+        <section className="register">
+        <Link to="/"><img className="register__logo" src={logo} alt="логотип" /></Link>
             <h1 className="register__greeting">Добро пожаловать!</h1>
             <form className="register__form">
                 <label className="register__field">
-                    <p className="register__title">Имя</p>
+                    Имя
                     <input className="register__input register__input_name" 
-                    name="name" required />
+                    name="name" placeholder="Имя" required minLength="2" maxLength="30" />
                     <span className="register__input-error name-input-error"></span>
                 </label>
                 <label className="register__field">
-                    <p className="register__title">E-mail</p>
+                    E-mail
                     <input className="register__input register__input_email" type="email" 
-                    name="email" required />
+                    name="email" placeholder="Почта" required />
                     <span className="register__input-error email-input-error"></span>
                 </label>
                 <label className="register__field">
-                    <p className="register__title">Пароль</p>
+                    Пароль
                     <input className="register__input register__input_password" type="password" 
-                    name="password" required />
+                    name="password" placeholder="Пароль" minLength="2" maxLength="30" required />
                     <span className="register__input-error password-input-error"></span>
                 </label>
                 <button type="submit" className="register__submit">Зарегистрироваться</button>
@@ -32,7 +32,7 @@ function Register() {
                 <p className="register__text">Уже зарегистрированы?</p>
                 <Link to="/sign-in" className="register__link">Войти</Link>
             </div>
-        </div>
+        </section>
     )
 }
 

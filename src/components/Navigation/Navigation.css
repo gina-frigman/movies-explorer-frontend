@@ -59,6 +59,11 @@
     text-decoration: none;
 }
 
+.menu__link_active {
+    padding-bottom: 4px;
+    border-bottom: 2px solid #fff;
+}
+
 .menu__link:hover {
     opacity: .7;
     transition: opacity ease-out .3s;

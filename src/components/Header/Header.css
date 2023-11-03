@@ -92,7 +92,6 @@
 
 @media screen and (max-width: 1023px) {
     .header {
-        width: 92%;
         padding-left: 30px;
         padding-right: 30px;
     }
@@ -100,7 +99,6 @@
 
 @media screen and (max-width: 767px) {
     .header {
-        width: 91%;
         padding-left: 14px;
         padding-right: 14px;
     }

@@ -6,7 +6,7 @@ function MoviesCard() {
         <div className="card">
             <img className="card__image" alt="изображение фильма" src={cardExample} />
             <div className="card__container">
-                <h1 className="card__title">33 слова о дизайне</h1>
+                <h2 className="card__title">33 слова о дизайне</h2>
                 <button className={`card__button ${window.location.pathname === "/movies" ? "card__button_like" : "card__button_delete"}`}></button>
             </div>
             <p className="card__duration">1ч 47м</p>

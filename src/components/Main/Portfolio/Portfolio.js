@@ -3,7 +3,7 @@ import "./Portfolio.css"
 function Portfolio() {
     return(
         <section className="portfolio">
-            <h1 className="portfolio__header">Портфолио</h1>
+            <h2 className="portfolio__header">Портфолио</h2>
             <ul className="portfolio__links">
                 <li className="portfolio__link">
                     <a className="portfolio__link-name" href="https://gina-frigman.github.io/how-to-learn/" rel="noreferrer" target="_blank">Статичный сайт

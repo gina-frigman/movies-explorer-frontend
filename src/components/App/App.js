@@ -10,7 +10,7 @@ import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 
 function App() {
-    const [isLoggedIn, setIsLoggedIn] = React.useState(false)
+    const [isLoggedIn, setIsLoggedIn] = React.useState(true)
 
     return(
         <div className="app">

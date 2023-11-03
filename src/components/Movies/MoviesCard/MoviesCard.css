@@ -1,6 +1,7 @@
 .card {
     background-color: #222;
     color: #fff;
+    border-radius: 6px;
 }
 
 .card__image {
@@ -63,7 +64,9 @@
     color: #8B8B8B;
     font-size: 11px;
     font-weight: 400;
-    margin: 0 0 0 16px;
+    margin: 0;
+    padding-left: 16px;
+    padding-bottom: 16px;
 }
 
 @media screen and (max-width: 1023px) {
@@ -77,6 +80,11 @@
 
     .card__button {
         margin-right: 8px;
+    }
+
+    .card__duration {
+        padding-left: 14px;
+        padding-bottom: 14px;
     }
 }
 

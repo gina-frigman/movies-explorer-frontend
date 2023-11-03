@@ -3,17 +3,17 @@ import "./MoviesCardList.css"
 
 function MoviesCardList() {
     return(
-        <div className="cardlist">
-            <div className="cards">
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-                <MoviesCard />
-            </div>
+        <section className="cardlist">
+            <ul className="cards">
+                <li className="cards__element"><MoviesCard /></li>
+                <li className="cards__element"><MoviesCard /></li>
+                <li className="cards__element"><MoviesCard /></li>
+                <li className="cards__element"><MoviesCard /></li>
+                <li className="cards__element"><MoviesCard /></li>
+                <li className="cards__element"><MoviesCard /></li>
+            </ul>
             <button className="cardlist__more">Ещё</button>
-        </div>
+        </section>
     )
 }
 
