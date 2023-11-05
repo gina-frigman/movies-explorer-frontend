@@ -2,7 +2,7 @@
     width: 90%;
     max-width: 1140px;
     margin: 60px auto 0;
-    padding-bottom: 57px;
+    padding-bottom: 69px;
     border-bottom: 1px solid #424242;
 }
 
@@ -24,7 +24,7 @@
     font-size: 13px;
     font-weight: 400;
     line-height: 17px;
-    margin: 0 auto 25px;
+    margin: 0 auto 39px;
     outline: none;
 }
 
@@ -80,7 +80,6 @@
 }
 
 .search__text {
-    margin-left: 10px;
     font-size: 14px;
     font-weight: 400;
     line-height: 18px;
@@ -93,7 +92,7 @@
         width: 92%;
         margin-top: 80px;
         margin-bottom: 50px;
-        padding-bottom: 40px;
+        padding-bottom: 50px;
     }
 
     .search__input {
@@ -102,11 +101,11 @@
 }
 
 @media screen and (max-width: 767px) {
-    .search__text {
-        font-size: 11px;
+    .search {
+        padding-bottom: 50px;
     }
 
-    .search__input {
-        margin-bottom: 29px;
+    .search__text {
+        font-size: 11px;
     }
 }

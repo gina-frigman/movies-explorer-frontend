@@ -1,8 +1,7 @@
 .cardlist {
-    width: 90%;
     max-width: 1140px;
     margin: 80px auto 0;
-    padding-bottom: 80px;
+    padding-bottom: 88px;
 }
 
 .cards {
@@ -23,7 +22,7 @@
     width: 100%;
     border: none;
     color: #fff;
-    margin: 93px 0 0;
+    margin: 43px 0 0;
     padding-top: 11px;
     padding-bottom: 9px;
     border-radius: 6px;
@@ -42,21 +41,33 @@
         padding-bottom: 97px;
     }
     .cards {
-        grid-template-columns: repeat(auto-fit, 330px);
-        row-gap: 43px;
+        grid-template-columns: repeat(auto-fit, 340px);
+        row-gap: 30px;
+    }
+
+    .cardlist__more {
+        margin-top: 61px;
     }
 }
 
 @media screen and (max-width: 767px) {
     .cardlist {
         margin-top: 50px;
+        padding-bottom: 90px;
+        display: flex;
+        flex-direction: column;
     }
 
     .cards {
         width: 300px;
         display: flex;
         flex-direction: column;
-        row-gap: 27px;
+        row-gap: 14px;
         margin: 0 auto;
+    }
+
+    .cardlist__more {
+        width: 300px;
+        margin: 75px auto 0;
     }
 }

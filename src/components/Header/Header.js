@@ -51,7 +51,7 @@ function Header(props) {
     const returnMobileHeader = () => {
         return(
             <header className={`header ${props.color ? "header_blue" : ""}`}>
-                <img className="header__logo" src={headerLogo} alt="логотип" />
+                <Link to="/"><img className="header__logo" src={headerLogo} alt="логотип" /></Link>
                 {props.isLoggedIn ?
                     isMenuOpen ?
                         <Navigation onClose={closeMenu} /> :
