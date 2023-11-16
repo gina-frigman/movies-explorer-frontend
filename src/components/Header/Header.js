@@ -4,11 +4,11 @@ import profileIcon from "./../../images/profile.svg"
 import { Link } from "react-router-dom"
 import React from "react";
 import Navigation from "../Navigation/Navigation";
+import { BREAKPOINT } from "../../utils/constants";
 
 function Header(props) {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false)
     const [width, setWidth] = React.useState(window.innerWidth);
-    const breakpoint = 1024;
 
     function openMenu() {
         setIsMenuOpen(true)
@@ -39,8 +39,8 @@ function Header(props) {
                     <>
                         <Link to="/"><img className="header__logo" src={headerLogo} alt="логотип" /></Link>
                         <div className="header__container header__container_auth">
-                            <Link className="header__button" to="/sign-up">Регистрация</Link>
-                            <Link className="header__button header__button_sign-in" to="/sign-in">Войти</Link>
+                            <Link className="header__button" to="/signup">Регистрация</Link>
+                            <Link className="header__button header__button_sign-in" to="/signin">Войти</Link>
                         </div>
                     </>
                 }
@@ -57,8 +57,8 @@ function Header(props) {
                         <Navigation onClose={closeMenu} /> :
                         <button className="header__menu" onClick={openMenu}></button> :
                     <div className="header__container header__container_auth">
-                        <Link className="header__button" to="/sign-up">Регистрация</Link>
-                        <Link className="header__button header__button_sign-in" to="/sign-in">Войти</Link>
+                        <Link className="header__button" to="/signup">Регистрация</Link>
+                        <Link className="header__button header__button_sign-in" to="/signin">Войти</Link>
                     </div>
                 }                
             </header>
@@ -74,8 +74,7 @@ function Header(props) {
             window.removeEventListener("resize", handleResizeWindow);
         };
     }, []);
-
-    if (width > breakpoint) {
+    if (width > BREAKPOINT) {
         return returnDesktopHeader()
     } else {
         return returnMobileHeader()

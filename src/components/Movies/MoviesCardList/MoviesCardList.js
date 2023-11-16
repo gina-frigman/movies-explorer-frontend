@@ -1,18 +1,51 @@
+import React from "react";
 import MoviesCard from "../MoviesCard/MoviesCard"
+import Preloader from "../Preloader/Preloader";
 import "./MoviesCardList.css"
+import { MOVIES_PATH, WINDOWWIDTH } from "../../../utils/constants";
 
-function MoviesCardList() {
+function MoviesCardList(props) {
+    const [cards, setCards] = React.useState(0)
+    const pathname = window.location.pathname;
+    const movies = props.movies.length !== 0 ? true : false
+    const firstTime = (MOVIES_PATH && !localStorage.search) || (!MOVIES_PATH && !movies)
+
+    React.useEffect(() => {
+        const amountOfCards = () => {
+            if (WINDOWWIDTH > 1279) {
+                setCards(12);
+            } else if (WINDOWWIDTH > 767) {
+                setCards(8);
+            } else {
+                setCards(5);
+            }
+        };
+        amountOfCards();
+        window.addEventListener("resize", amountOfCards);
+        return () => {
+            window.removeEventListener("resize", amountOfCards);
+        };
+    }, []);
+      
+    const handleMoreClick = () => {
+        if (WINDOWWIDTH > 1023) {
+            setCards(cards + 3);
+        } else {
+            setCards(cards + 2);
+        }
+    }
+
     return(
-        <section className="cardlist">
+        <section className={`cardlist ${movies ? "" : "cardlist__not-found"}`}>
             <ul className="cards">
-                <li className="cards__element"><MoviesCard /></li>
-                <li className="cards__element"><MoviesCard /></li>
-                <li className="cards__element"><MoviesCard /></li>
-                <li className="cards__element"><MoviesCard /></li>
-                <li className="cards__element"><MoviesCard /></li>
-                <li className="cards__element"><MoviesCard /></li>
+                {props.isLoading && localStorage.search ? <Preloader /> : movies && 
+                Array.from(props.movies).slice(0, MOVIES_PATH ? cards : props.movies.length).map(movie => (
+                    <li key={MOVIES_PATH ? movie.id : movie._id} className="cards__element"><MoviesCard movie={movie} onLike={props.onLike} 
+                    onDelete={props.onDelete} likedMovies={props.likedMovies} moviespath={props.moviespath} /></li>
+                ))}
+                {!firstTime && !movies && !props.isLoading && <p className="cards__not-found">Ничего не найдено.</p>}
             </ul>
-            <button className="cardlist__more">Ещё</button>
+            {movies && pathname === "/movies" && cards < props.movies.length && <button className="cardlist__more" onClick={handleMoreClick}>Ещё</button>}
         </section>
     )
 }

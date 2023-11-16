@@ -4,6 +4,10 @@
     padding-bottom: 88px;
 }
 
+.cardlist__not-found {
+    height: calc(100vh - 660px);
+}
+
 .cards {
     padding: 0;
     width: 100%;
@@ -36,10 +40,21 @@
     transition: opacity ease-out .3s;
 }
 
+.cards__not-found {
+    font-size: 13px;
+    font-weight: 400;
+    text-align: center;
+}
+
 @media screen and (max-width: 1023px) {
     .cardlist {
         padding-bottom: 97px;
     }
+
+    .cards__not-found {
+        height: calc(100vh - 650px);
+    }
+    
     .cards {
         grid-template-columns: repeat(auto-fit, 340px);
         row-gap: 30px;

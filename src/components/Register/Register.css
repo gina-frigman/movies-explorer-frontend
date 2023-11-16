@@ -58,7 +58,6 @@
 }
 
 .register__input-error {
-    visibility: hidden;
     max-width: 396px;
     color: #EE3465;
     font-weight: 400;
@@ -79,6 +78,11 @@
 .register__submit:hover {
     opacity: .7;
     transition: opacity ease-out .3s;
+}
+
+.register__submit_disabled {
+    opacity: .7;
+    cursor: auto;
 }
 
 .register__container {

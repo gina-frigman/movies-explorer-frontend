@@ -82,6 +82,11 @@
     transition: opacity ease-out .3s;
 }
 
+.login__submit_disabled {
+    opacity: .7;
+    cursor: auto;
+}
+
 .login__container {
     margin: 0 auto;
     display: flex;

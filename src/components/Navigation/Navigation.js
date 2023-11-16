@@ -4,7 +4,7 @@ import "./Navigation.css"
 
 function Navigation(props) {
     return(
-        <nav className='menu'>
+        <nav className="menu">
             <div className="menu__container">
                 <div className="menu__flexbox">
                     <button className="menu__close-button" onClick={props.onClose}></button>

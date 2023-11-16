@@ -8,8 +8,8 @@ function SavedMovies(props) {
         <>
             <Header isLoggedIn={props.isLoggedIn} />
             <main>
-                <SearchForm />
-                <MoviesCardList />
+                <SearchForm onSubmit={props.onSearch} errMessage={props.errMessage} />
+                <MoviesCardList moviespath={false} isLoading={props.isLoading} onDelete={props.onDelete} likedMovies={props.movies} movies={props.movies} onLike="" />
             </main>
             <Footer />
         </>
