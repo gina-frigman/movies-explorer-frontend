@@ -73,7 +73,7 @@ function App() {
     }, [navigate])
 
     React.useEffect(() => {
-        navigate(JSON.parse(window.localStorage.getItem("route") ?? ""))
+        navigate(JSON.parse(window.localStorage.getItem("route") || "{}"))
         window.onbeforeunload = () => {
             window.localStorage.setItem("route", JSON.stringify(window.location.pathname));
         };
