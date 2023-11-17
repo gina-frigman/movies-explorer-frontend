@@ -72,16 +72,6 @@ function App() {
         }
     }, [navigate])
 
-    React.useEffect(() => {
-        if (localStorage.getItem("route")) {
-            navigate(JSON.parse(localStorage.getItem("route")))
-        }
-        window.onbeforeunload = () => {
-            localStorage.setItem("route", JSON.stringify(window.location.pathname));
-        };
-    }, []);
-
-
     function handleRegister(formValue) {
         auth.register(formValue)
         .then(res => {
