@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Header from "../Header/Header";
 import "./Profile.css"
 import React from "react";
@@ -11,6 +11,7 @@ function Profile(props) {
     const [errors, setErrors] = React.useState({});
     const [isSaved, setIsSaved] = React.useState(false)
     const [isValid, setIsValid] = React.useState(false);
+    const navigate = useNavigate();
     const [formValue, setFormValue] = React.useState({
         email: '',
         name: ''
@@ -23,8 +24,16 @@ function Profile(props) {
             email: currentUser.email,
             name: currentUser.name
         })
-        setIsSaved(Boolean(localStorage.dataChanged))
+        setIsSaved(localStorage.dataChanged === 'true' ? true : false)
     }, [currentUser])
+
+    React.useEffect(() => {
+        localStorage.setItem('dataChanged', 'false')
+    }, [handleSubmit])
+
+    React.useEffect(() => {
+        localStorage.setItem('dataChanged', 'true')
+    }, [navigate, props.isLoggedIn])
 
     React.useEffect(() => {
         if (formValue.email === currentUser.email && formValue.name === currentUser.name) {
@@ -53,7 +62,6 @@ function Profile(props) {
     function handleSubmit(evt) {
         evt.preventDefault();
         props.onSubmit(formValue)
-        localStorage.setItem('dataChanged', 'true')
         setIsFormEditable(false)
     }
 

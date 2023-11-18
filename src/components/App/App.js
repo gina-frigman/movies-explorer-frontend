@@ -72,6 +72,16 @@ function App() {
         }
     }, [navigate])
 
+    React.useEffect(() => {
+        if (localStorage.getItem("route")) {
+            navigate(JSON.parse(localStorage.getItem("route")))
+        }
+        window.onbeforeunload = () => {
+            localStorage.setItem("route", JSON.stringify(window.location.pathname));
+        };
+    }, []);
+
+
     function handleRegister(formValue) {
         auth.register(formValue)
         .then(res => {
@@ -210,7 +220,7 @@ function App() {
                     <Route path="/movies" element={<ProtectedRoute element={Movies} isLoggedIn={isLoggedIn} onLike={handleLikeMovie} 
                     onSearch={handleSearchMovies} movies={movies} errMessage={errMessage} isLoading={isLoading} likedMovies={likedMovies} />} />
                     <Route path="/saved-movies" element={<ProtectedRoute element={SavedMovies} isLoggedIn={isLoggedIn} onDelete={handleDeleteSavedMovie} 
-                    onSearch={handleSearchMovies} errMessage={errMessage} isLoading={isLoading} movies={likedMovies} />} />
+                    onSearch={handleSearchMovies} errMessage={errMessage} isLoading={isLoading} likedMovies={allLikedMovies} movies={likedMovies} />} />
                     <Route path="/profile" element={<ProtectedRoute element={Profile} isLoggedIn={isLoggedIn} onSubmit={handleEditUserInfo} 
                     onSignOut={handleSignOut} errMessage={errMessage} isLoading={isLoading} />} />
                     <Route path="/error" element={<Error />} />

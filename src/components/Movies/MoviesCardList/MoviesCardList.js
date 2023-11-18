@@ -8,7 +8,7 @@ function MoviesCardList(props) {
     const [cards, setCards] = React.useState(0)
     const pathname = window.location.pathname;
     const movies = props.movies.length !== 0 ? true : false
-    const firstTime = (MOVIES_PATH && !localStorage.search) || (!MOVIES_PATH && !movies)
+    const firstTime = (MOVIES_PATH && !localStorage.search) || (!MOVIES_PATH && !props.likedMovies)
 
     React.useEffect(() => {
         const amountOfCards = () => {
