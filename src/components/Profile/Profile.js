@@ -3,13 +3,17 @@ import Header from "../Header/Header";
 import "./Profile.css"
 import React from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext"; 
-import { DATA_NOT_CHANGED_ERR } from "../../utils/constants";
+import { DATA_NOT_CHANGED_ERR, EMAIL_REGEX } from "../../utils/constants";
 
 function Profile(props) {
     const [isFormEditable, setIsFormEditable] = React.useState(false)
     const currentUser = React.useContext(CurrentUserContext);
-    const [errors, setErrors] = React.useState({});
+    const [errors, setErrors] = React.useState({
+        name: "",
+        email: ""
+    });
     const [isSaved, setIsSaved] = React.useState(false)
+    const [isSuccess, setIsSuccess] = React.useState(false)
     const [isValid, setIsValid] = React.useState(false);
     const navigate = useNavigate();
     const [formValue, setFormValue] = React.useState({
@@ -18,6 +22,7 @@ function Profile(props) {
     })
     const [submitError, setSubmitError] = React.useState("")
     const noErrors = errors.name === "" && errors.email === "" ? true : false
+    const isSubmittable = noErrors && submitError === "" ? true : false
 
     React.useEffect(() => {
         setFormValue({
@@ -28,12 +33,16 @@ function Profile(props) {
     }, [currentUser])
 
     React.useEffect(() => {
-        localStorage.setItem('dataChanged', 'false')
-    }, [handleSubmit])
-
-    React.useEffect(() => {
         localStorage.setItem('dataChanged', 'true')
     }, [navigate, props.isLoggedIn])
+
+    React.useEffect(() => {        
+        if (props.isSuccess) {
+            localStorage.setItem('dataChanged', 'true')            
+        } else {
+            localStorage.setItem('dataChanged', 'false')  
+        }
+    }, [handleSubmit])
 
     React.useEffect(() => {
         if (formValue.email === currentUser.email && formValue.name === currentUser.name) {
@@ -69,6 +78,7 @@ function Profile(props) {
         <>
             <Header isLoggedIn={props.isLoggedIn} />
             <main className="profile">
+                <p className="profile__input-error">{props.errMessage}</p>
                 <p className={`profile__data-saved-text ${isSaved ? "profile__data-saved-text_visible" : ""}`}>Данные успешно изменены.</p>
                 <h1 className="profile__greeting">Привет, {currentUser.name}!</h1>
                 <form className="profile__form">
@@ -88,7 +98,7 @@ function Profile(props) {
                             <span className="profile__placeholder">E-mail</span>
                             {isFormEditable ?
                             <input className="profile__input profile__input_email" value={formValue.email}
-                            type="email" name="email" placeholder="Почта" onChange={handleChange} /> :
+                            type="email" name="email" placeholder="Почта" onChange={handleChange} pattern={EMAIL_REGEX} /> :
                             <span className="profile__input-value">{currentUser.email}</span>
                             }
                         </span>
@@ -97,8 +107,8 @@ function Profile(props) {
                     {isFormEditable ?
                     <>
                         <span className="profile__input-error">{submitError}</span>
-                        <button className={`profile__submit ${noErrors ? "" : "profile__submit_disabled"}`} type="submit" 
-                        onClick={handleSubmit} disabled={noErrors && !submitError ? false : true}>Сохранить</button>
+                        <button className={`profile__submit ${isSubmittable ? "" : "profile__submit_disabled"}`} type="submit" 
+                        onClick={handleSubmit} disabled={!isSubmittable}>Сохранить</button>
                     </> :                    
                     <button className="profile__edit" onClick={handleEditProfileClick}>Редактировать</button>
                     }

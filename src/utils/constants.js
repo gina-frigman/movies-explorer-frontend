@@ -7,4 +7,4 @@ export const BREAKPOINT = 1024;
 export const WINDOWWIDTH = window.innerWidth;
 export const KEY_WORDS_ERR = "Нужно ввести ключевое слово.";
 export const DATA_NOT_CHANGED_ERR = "Данные пользователя не были изменены.";
-export const MOVIES_PATH = window.location.pathname === "/movies" ? true : false
+export const EMAIL_REGEX = "^\\S+@\\S+\\.\\S+$"

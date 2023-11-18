@@ -13,7 +13,7 @@ import { moviesApi } from "../../utils/MoviesApi";
 import { auth } from "../../utils/Auth";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { AUTH_ERR, EXISTING_EMAIL_ERR, MOVIES_PATH, SERVER_ERR, SYMBOLS, UPDATE_PROFILE_ERR } from "../../utils/constants";
+import { AUTH_ERR, EXISTING_EMAIL_ERR, SERVER_ERR, SYMBOLS, UPDATE_PROFILE_ERR } from "../../utils/constants";
 import Preloader from "../Movies/Preloader/Preloader";
 
 function App() {
@@ -25,6 +25,8 @@ function App() {
     const [allMovies, setAllMovies] = React.useState([]);
     const [allLikedMovies, setAllLikedMovies] = React.useState([]);
     const [likedMovies, setLikedMovies] = React.useState([]);
+    const [isMoviesPath, setMoviesPath] = React.useState(false)
+    const [isSuccess, setIsSuccess] = React.useState(false)
     const navigate = useNavigate();
 
     React.useEffect(() => {
@@ -70,6 +72,7 @@ function App() {
             setIsLoggedIn(false)
             setIsLoading(false)
         }
+        setMoviesPath(window.location.pathname === '/movies' ? true : false)
     }, [navigate])
 
     React.useEffect(() => {
@@ -116,9 +119,9 @@ function App() {
   
     function handleSignOut() {
         setIsLoading(true)
-        localStorage.removeItem("jwt");
-        localStorage.removeItem("search");
-        localStorage.removeItem("filter");
+        localStorage.clear()
+        setAllLikedMovies([])
+        setMovies([])
         setCurrentUser({
             email: "",
             name: ""
@@ -136,11 +139,16 @@ function App() {
                     email: res.email,
                     name: res.name
                 })
+                setIsSuccess(true)
+                setErrMessage("")
                 setIsLoading(false)
             }
         })
         .catch(err => {
-            if (err.status === "11000") {
+            if (err === "ошибка 409") {
+                navigate("/profile", {replace: true})
+                setIsLoading(false)
+                setIsSuccess(false)
                 setErrMessage(EXISTING_EMAIL_ERR)
             } else {
                 setErrMessage(UPDATE_PROFILE_ERR)
@@ -155,14 +163,14 @@ function App() {
         )
         if (filter) {
             const shortMovies = searchedMovies.filter(movie => movie.duration <= 40)
-            if (MOVIES_PATH) {
+            if (isMoviesPath) {
                 setMovies(shortMovies)
-                localStorage.setItem("movies", shortMovies)
+                localStorage.setItem("movies", JSON.stringify(shortMovies))
             } else {
                 setLikedMovies(shortMovies)
             }
         } else {
-            if (MOVIES_PATH) {
+            if (isMoviesPath) {
                 setMovies(searchedMovies)
                 localStorage.setItem("movies", JSON.stringify(searchedMovies))
             } else {
@@ -174,7 +182,7 @@ function App() {
 
     function handleSearchMovies(formValue, filter) {
         setIsLoading(true)
-        if (MOVIES_PATH) {
+        if (isMoviesPath) {
             filterMovies(allMovies, formValue, filter) 
         } else {
             filterMovies(allLikedMovies, formValue, filter)
@@ -222,7 +230,7 @@ function App() {
                     <Route path="/saved-movies" element={<ProtectedRoute element={SavedMovies} isLoggedIn={isLoggedIn} onDelete={handleDeleteSavedMovie} 
                     onSearch={handleSearchMovies} errMessage={errMessage} isLoading={isLoading} likedMovies={allLikedMovies} movies={likedMovies} />} />
                     <Route path="/profile" element={<ProtectedRoute element={Profile} isLoggedIn={isLoggedIn} onSubmit={handleEditUserInfo} 
-                    onSignOut={handleSignOut} errMessage={errMessage} isLoading={isLoading} />} />
+                    onSignOut={handleSignOut} errMessage={errMessage} isLoading={isLoading} isSuccess={isSuccess} />} />
                     <Route path="/error" element={<Error />} />
                 </Routes>
                 }
