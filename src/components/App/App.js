@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Main from "../Main/Main";
 import "./App.css"
 import Profile from "../Profile/Profile";
@@ -13,7 +13,7 @@ import { moviesApi } from "../../utils/MoviesApi";
 import { auth } from "../../utils/Auth";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { AUTH_ERR, EXISTING_EMAIL_ERR, SERVER_ERR, SYMBOLS, UPDATE_PROFILE_ERR } from "../../utils/constants";
+import { AUTH_ERR, EXISTING_EMAIL_ERR, SERVER_ERR, UPDATE_PROFILE_ERR } from "../../utils/constants";
 import Preloader from "../Movies/Preloader/Preloader";
 
 function App() {
@@ -54,9 +54,9 @@ function App() {
     }, [isLoggedIn])
 
     React.useEffect(() => {
+        setIsLoading(true)
         if (localStorage.getItem("jwt")) {
             const jwt = localStorage.getItem("jwt")
-            setIsLoading(true)
             Promise.all([
                 auth.getContent(jwt),
                 mainApi.getLikedMovies(localStorage.jwt)
@@ -64,29 +64,19 @@ function App() {
             .then(([authRes, likedMoviesRes]) => {
                 if (authRes) {
                     setIsLoggedIn(true);
-                    setIsLoading(false)
                 }
-                console.log(likedMoviesRes)
                 setAllLikedMovies(likedMoviesRes)
                 setLikedMovies(likedMoviesRes)
             })
             .catch(err => console.log(err))
         } else {
             setIsLoggedIn(false)
-            setIsLoading(false)
         }
+        setIsLoading(false)
+
+        console.log(window.location.pathname === '/movies', window.location.pathname)
         setMoviesPath(window.location.pathname === '/movies' ? true : false)
     }, [navigate])
-
-    React.useEffect(() => {
-        if (localStorage.getItem("route")) {
-            navigate(JSON.parse(localStorage.getItem("route")))
-        }
-        window.onbeforeunload = () => {
-            localStorage.setItem("route", JSON.stringify(window.location.pathname));
-        };
-    }, []);
-
 
     function handleRegister(formValue) {
         auth.register(formValue)
@@ -170,12 +160,12 @@ function App() {
                 setMovies(shortMovies)
                 localStorage.setItem("movies", JSON.stringify(shortMovies))
             } else {
+                console.log('meowww')
                 setLikedMovies(shortMovies)
             }
         } else {
             if (isMoviesPath) {
                 setMovies(searchedMovies)
-                console.log(searchedMovies)
                 localStorage.setItem("movies", JSON.stringify(searchedMovies))
             } else {
                 setLikedMovies(searchedMovies)
