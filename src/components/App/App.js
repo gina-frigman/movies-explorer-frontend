@@ -33,13 +33,10 @@ function App() {
         if (localStorage.jwt) {
             Promise.all([
                 mainApi.getUserInfo(localStorage.jwt),
-                mainApi.getLikedMovies(localStorage.jwt),
                 moviesApi.getMovies()
             ])
-            .then(([userRes, likedMoviesRes, moviesRes]) => {
+            .then(([userRes, moviesRes]) => {
                 setCurrentUser(userRes);
-                setAllLikedMovies(likedMoviesRes)
-                setLikedMovies(likedMoviesRes)
                 setAllMovies(moviesRes)
                 if (localStorage.movies) {
                     setMovies(JSON.parse(localStorage.movies))
@@ -54,18 +51,24 @@ function App() {
                 }
             })
         }
-    }, [isLoggedIn, navigate])
+    }, [isLoggedIn])
 
     React.useEffect(() => {
         if (localStorage.getItem("jwt")) {
-            setIsLoading(true)
             const jwt = localStorage.getItem("jwt")
-            auth.getContent(jwt)
-            .then((res) => {
-                if (res) {
+            setIsLoading(true)
+            Promise.all([
+                auth.getContent(jwt),
+                mainApi.getLikedMovies(localStorage.jwt)
+            ])
+            .then(([authRes, likedMoviesRes]) => {
+                if (authRes) {
                     setIsLoggedIn(true);
                     setIsLoading(false)
                 }
+                console.log(likedMoviesRes)
+                setAllLikedMovies(likedMoviesRes)
+                setLikedMovies(likedMoviesRes)
             })
             .catch(err => console.log(err))
         } else {
@@ -158,8 +161,8 @@ function App() {
 
     function filterMovies(movies, formValue, filter) {
         const searchedMovies = formValue === "" ? allLikedMovies : movies.filter(movie => 
-            (movie.nameRU.toLowerCase().replace(SYMBOLS).split(/\s+/).includes(formValue.toString().toLowerCase())) || 
-            (movie.nameEN.toLowerCase().replace(SYMBOLS).split(/\s+/).includes(formValue.toString().toLowerCase()))
+            (movie.nameRU.toLowerCase().includes(formValue.toLowerCase())) || 
+            (movie.nameEN.toLowerCase().includes(formValue.toLowerCase()))
         )
         if (filter) {
             const shortMovies = searchedMovies.filter(movie => movie.duration <= 40)
@@ -172,6 +175,7 @@ function App() {
         } else {
             if (isMoviesPath) {
                 setMovies(searchedMovies)
+                console.log(searchedMovies)
                 localStorage.setItem("movies", JSON.stringify(searchedMovies))
             } else {
                 setLikedMovies(searchedMovies)
@@ -221,7 +225,7 @@ function App() {
             <CurrentUserContext.Provider value={currentUser}>
                 {isLoading ? <Preloader /> :
                 <Routes>
-                    <Route path="*" element={<Navigate to="/error" replace />}  />
+                    <Route path="*" element={<Error />}  />
                     <Route path="/" element={<Main isLoggedIn={isLoggedIn} />} />
                     <Route path="/signup" element={<Register onSubmit={handleRegister} errMessage={errMessage} />} />
                     <Route path="/signin" element={<Login onSubmit={handleLogin} errMessage={errMessage} />} />
@@ -231,7 +235,6 @@ function App() {
                     onSearch={handleSearchMovies} errMessage={errMessage} isLoading={isLoading} likedMovies={allLikedMovies} movies={likedMovies} />} />
                     <Route path="/profile" element={<ProtectedRoute element={Profile} isLoggedIn={isLoggedIn} onSubmit={handleEditUserInfo} 
                     onSignOut={handleSignOut} errMessage={errMessage} isLoading={isLoading} isSuccess={isSuccess} />} />
-                    <Route path="/error" element={<Error />} />
                 </Routes>
                 }
             </CurrentUserContext.Provider>

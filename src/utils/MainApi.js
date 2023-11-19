@@ -62,7 +62,7 @@ class MainApi {
                 owner: data.owner,
                 nameRU: data.nameRU,
                 nameEN: data.nameEN,
-                _id: data.id,
+                movieId: data.id,
             })
         })
         .then(this._checkResponeData)

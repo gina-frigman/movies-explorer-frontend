@@ -9,7 +9,7 @@ function MoviesCard(props) {
     const [isLiked, setIsLiked] = React.useState(false)
 
     React.useEffect(() => {
-        const liked = props.likedMovies.some(movie => movie._id === props.movie.id)
+        const liked = props.likedMovies.some(likedMovie => likedMovie.movieId === props.movie.id)
         setIsLiked(liked)
     }, [setIsLiked])
 
