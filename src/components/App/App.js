@@ -13,7 +13,9 @@ import { moviesApi } from "../../utils/MoviesApi";
 import { auth } from "../../utils/Auth";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { AUTH_ERR, EXISTING_EMAIL_ERR, SERVER_ERR, UPDATE_PROFILE_ERR } from "../../utils/constants";
+import { BIG_SCREEN, BIG_SCREEN_CARDS_AMOUNT, BIG_SCREEN_MORE, DELETE_MOVIE_ERR, EXISTING_EMAIL_ERR, 
+    LIKE_MOVIE_ERR, LOGIN_ERR, MID_SCREEN, MID_SCREEN_CARDS_AMOUNT, REGISTER_ERR, SERVER_ERR, 
+    SHORT_MOVIES, SMALL_SCREEN_CARDS_AMOUNT, SMALL_SCREEN_MORE, UPDATE_PROFILE_ERR } from "../../utils/constants";
 import Preloader from "../Movies/Preloader/Preloader";
 
 function App() {
@@ -91,14 +93,15 @@ function App() {
             if (res) {
                 setIsLoggedIn(true);
                 handleLogin({email: formValue.email, password: formValue.password})
+                setErrMessage("")
             }
         })
         .catch(err => {
             console.log(err);
-            if (err.status === "11000") {
+            if (err === "ошибка 409") {
                 setErrMessage(EXISTING_EMAIL_ERR)
             } else {
-                setErrMessage(AUTH_ERR)
+                setErrMessage(REGISTER_ERR)
             }
         })
     }
@@ -114,6 +117,7 @@ function App() {
         })
         .catch(err => {
             console.log(err);
+            setErrMessage(LOGIN_ERR)
         })
     }
   
@@ -162,7 +166,7 @@ function App() {
             (movie.nameEN.toLowerCase().includes(formValue.toLowerCase()))
         )
         if (filter) {
-            const shortMovies = searchedMovies.filter(movie => movie.duration <= 40)
+            const shortMovies = searchedMovies.filter(movie => movie.duration <= SHORT_MOVIES)
             if (isMoviesPath) {
                 setMovies(shortMovies)
                 localStorage.setItem("movies", JSON.stringify(shortMovies))
@@ -196,8 +200,12 @@ function App() {
         .then(() => {
             setAllLikedMovies(allLikedMovies.filter(likedMovie => likedMovie._id !== movie._id))
             setLikedMovies(likedMovies.filter(likedMovie => likedMovie._id !== movie._id))
+            setErrMessage("")
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            console.log(err)
+            setErrMessage(DELETE_MOVIE_ERR)
+        })
     }
 
     function handleLikeMovie(movie, isLiked) {
@@ -206,21 +214,24 @@ function App() {
             .then((likedMovie) => {
                 setAllLikedMovies([likedMovie, ...allLikedMovies])
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err)
+                setErrMessage(LIKE_MOVIE_ERR)
+            })
         } else {
             handleDeleteSavedMovie(allLikedMovies.find(likedMovie => movie.id === likedMovie.movieId))
         }
     }
 
     function changeAmountOfCards() {
-        setCards(window.innerWidth > 1139 ? 12 : window.innerWidth > 766 ? 8 : 5)
+        setCards(window.innerWidth > BIG_SCREEN ? BIG_SCREEN_CARDS_AMOUNT : window.innerWidth > MID_SCREEN ? MID_SCREEN_CARDS_AMOUNT : SMALL_SCREEN_CARDS_AMOUNT)
     };
       
     function handleMoreClick() {
-        if (window.innerWidth > 1023) {
-            setCards(cards + 3);
+        if (window.innerWidth > BIG_SCREEN) {
+            setCards(cards + BIG_SCREEN_MORE);
         } else {
-            setCards(cards + 2);
+            setCards(cards + SMALL_SCREEN_MORE);
         }
     }
 
