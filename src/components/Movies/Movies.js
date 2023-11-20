@@ -9,7 +9,8 @@ function Movies(props) {
             <Header isLoggedIn={props.isLoggedIn} />
             <main>
                 <SearchForm onSubmit={props.onSearch} errMessage={props.errMessage} moviespath={true} />
-                <MoviesCardList moviespath={true} isLoading={props.isLoading} onLike={props.onLike} movies={props.movies} likedMovies={props.likedMovies} onDelete='' />
+                <MoviesCardList moviespath={true} isLoading={props.isLoading} onMore={props.onMoreClick} 
+                onLike={props.onLike} movies={props.movies} cards={props.cards} likedMovies={props.likedMovies} onDelete='' />
             </main>
             <Footer />
         </>

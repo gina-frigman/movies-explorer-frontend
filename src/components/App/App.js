@@ -17,6 +17,7 @@ import { AUTH_ERR, EXISTING_EMAIL_ERR, SERVER_ERR, UPDATE_PROFILE_ERR } from "..
 import Preloader from "../Movies/Preloader/Preloader";
 
 function App() {
+    const [cards, setCards] = React.useState(0)
     const [isLoggedIn, setIsLoggedIn] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false)
     const [errMessage, setErrMessage] = React.useState("");
@@ -73,10 +74,16 @@ function App() {
             setIsLoggedIn(false)
         }
         setIsLoading(false)
-
-        console.log(window.location.pathname === '/movies', window.location.pathname)
         setMoviesPath(window.location.pathname === '/movies' ? true : false)
     }, [navigate])
+
+    React.useEffect(() => {
+        changeAmountOfCards();
+        window.addEventListener("resize", changeAmountOfCards);
+        return () => {
+            window.removeEventListener("resize", changeAmountOfCards);
+        };
+    }, []);
 
     function handleRegister(formValue) {
         auth.register(formValue)
@@ -160,7 +167,6 @@ function App() {
                 setMovies(shortMovies)
                 localStorage.setItem("movies", JSON.stringify(shortMovies))
             } else {
-                console.log('meowww')
                 setLikedMovies(shortMovies)
             }
         } else {
@@ -175,6 +181,7 @@ function App() {
     }
 
     function handleSearchMovies(formValue, filter) {
+        changeAmountOfCards();
         setIsLoading(true)
         if (isMoviesPath) {
             filterMovies(allMovies, formValue, filter) 
@@ -201,12 +208,19 @@ function App() {
             })
             .catch(err => console.log(err))
         } else {
-            mainApi.deleteMovie(movie.id, localStorage.jwt)
-            .then(() => {
-                setAllLikedMovies(allLikedMovies.filter(likedMovie => likedMovie._id !== movie.id))
-                setLikedMovies(likedMovies.filter(likedMovie => likedMovie._id !== movie.id))
-            })           
-            .catch(err => console.log(err))
+            handleDeleteSavedMovie(allLikedMovies.find(likedMovie => movie.id === likedMovie.movieId))
+        }
+    }
+
+    function changeAmountOfCards() {
+        setCards(window.innerWidth > 1139 ? 12 : window.innerWidth > 766 ? 8 : 5)
+    };
+      
+    function handleMoreClick() {
+        if (window.innerWidth > 1023) {
+            setCards(cards + 3);
+        } else {
+            setCards(cards + 2);
         }
     }
 
@@ -219,10 +233,12 @@ function App() {
                     <Route path="/" element={<Main isLoggedIn={isLoggedIn} />} />
                     <Route path="/signup" element={<Register onSubmit={handleRegister} errMessage={errMessage} />} />
                     <Route path="/signin" element={<Login onSubmit={handleLogin} errMessage={errMessage} />} />
-                    <Route path="/movies" element={<ProtectedRoute element={Movies} isLoggedIn={isLoggedIn} onLike={handleLikeMovie} 
-                    onSearch={handleSearchMovies} movies={movies} errMessage={errMessage} isLoading={isLoading} likedMovies={likedMovies} />} />
+                    <Route path="/movies" element={<ProtectedRoute element={Movies} cards={cards} isLoggedIn={isLoggedIn} onLike={handleLikeMovie} 
+                    onMoreClick={handleMoreClick} onSearch={handleSearchMovies} movies={movies} errMessage={errMessage} isLoading={isLoading} 
+                    likedMovies={likedMovies} />} />
                     <Route path="/saved-movies" element={<ProtectedRoute element={SavedMovies} isLoggedIn={isLoggedIn} onDelete={handleDeleteSavedMovie} 
-                    onSearch={handleSearchMovies} errMessage={errMessage} isLoading={isLoading} likedMovies={allLikedMovies} movies={likedMovies} />} />
+                    onMoreClick={handleMoreClick} onSearch={handleSearchMovies} errMessage={errMessage} isLoading={isLoading} cards={cards} 
+                    likedMovies={allLikedMovies} movies={likedMovies} />} />
                     <Route path="/profile" element={<ProtectedRoute element={Profile} isLoggedIn={isLoggedIn} onSubmit={handleEditUserInfo} 
                     onSignOut={handleSignOut} errMessage={errMessage} isLoading={isLoading} isSuccess={isSuccess} />} />
                 </Routes>
