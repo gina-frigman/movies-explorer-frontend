@@ -55,7 +55,7 @@ class Auth {
 }
 
 export const auth = new Auth({
-    baseUrl: "https://api.movies.gina.nomoredomainsrocks.ru",
+    baseUrl: "http://localhost:3000",
     headers: {
         "Content-type": "application/json"
     }

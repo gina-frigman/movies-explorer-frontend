@@ -81,5 +81,5 @@ class MainApi {
 }
 
 export const mainApi = new MainApi({    
-    baseUrl: "https://api.movies.gina.nomoredomainsrocks.ru"
+    baseUrl: "http://localhost:3000"
 })

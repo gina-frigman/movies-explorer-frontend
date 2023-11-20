@@ -13,7 +13,6 @@ function Profile(props) {
         email: ""
     });
     const [isSaved, setIsSaved] = React.useState(false)
-    const [isSuccess, setIsSuccess] = React.useState(false)
     const [isValid, setIsValid] = React.useState(false);
     const navigate = useNavigate();
     const [formValue, setFormValue] = React.useState({
@@ -60,6 +59,7 @@ function Profile(props) {
         })
         setErrors({...errors, [name]: evt.target.validationMessage });
         setIsValid(evt.target.closest("form").checkValidity());
+        console.log(evt.target.validationMessage)
     }
 
     const handleEditProfileClick = () => {
