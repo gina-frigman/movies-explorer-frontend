@@ -15,7 +15,7 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { BIG_SCREEN, BIG_SCREEN_CARDS_AMOUNT, BIG_SCREEN_MORE, DELETE_MOVIE_ERR, EXISTING_EMAIL_ERR, 
     LIKE_MOVIE_ERR, LOGIN_ERR, MID_SCREEN, MID_SCREEN_CARDS_AMOUNT, REGISTER_ERR, SERVER_ERR, 
-    SHORT_MOVIES, SMALL_SCREEN_CARDS_AMOUNT, SMALL_SCREEN_MORE, UPDATE_PROFILE_ERR } from "../../utils/constants";
+    SHORT_MOVIES_DURATION, SMALL_SCREEN_CARDS_AMOUNT, SMALL_SCREEN_MORE, UPDATE_PROFILE_ERR } from "../../utils/constants";
 import Preloader from "../Movies/Preloader/Preloader";
 
 function App() {
@@ -166,7 +166,7 @@ function App() {
             (movie.nameEN.toLowerCase().includes(formValue.toLowerCase()))
         )
         if (filter) {
-            const shortMovies = searchedMovies.filter(movie => movie.duration <= SHORT_MOVIES)
+            const shortMovies = searchedMovies.filter(movie => movie.duration <= SHORT_MOVIES_DURATION)
             if (isMoviesPath) {
                 setMovies(shortMovies)
                 localStorage.setItem("movies", JSON.stringify(shortMovies))

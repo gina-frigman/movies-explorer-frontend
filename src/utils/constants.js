@@ -16,4 +16,4 @@ export const MID_SCREEN_CARDS_AMOUNT = 8;
 export const SMALL_SCREEN_CARDS_AMOUNT = 5;
 export const BIG_SCREEN_MORE = 3;
 export const SMALL_SCREEN_MORE = 2;
-export const SHORT_MOVIES = 5;
+export const SHORT_MOVIES_DURATION = 40;

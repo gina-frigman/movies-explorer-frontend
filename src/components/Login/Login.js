@@ -2,6 +2,7 @@ import "./Login.css"
 import logo from "./../../images/logo_header.svg"
 import { Link } from "react-router-dom";
 import React from "react";
+import { EMAIL_REGEX } from "../../utils/constants";
 
 function Login(props) {
     const [errors, setErrors] = React.useState({});
@@ -34,7 +35,7 @@ function Login(props) {
                 <label className="login__field">
                     E-mail
                     <input className="login__input login__input_email" type="email" onChange={handleChange}
-                    name="email" placeholder="Почта" value={formValue.email} required />
+                    name="email" placeholder="Почта" value={formValue.email} required pattern={EMAIL_REGEX} />
                     <span className="login__input-error email-input-error">{errors.email}</span>
                 </label>
                 <label className="login__field">

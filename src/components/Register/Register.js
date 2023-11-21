@@ -2,6 +2,7 @@ import "./Register.css"
 import logo from "./../../images/logo_header.svg"
 import { Link } from "react-router-dom";
 import React from "react";
+import { EMAIL_REGEX } from "../../utils/constants";
 
 function Register(props) {
     const [errors, setErrors] = React.useState({});
@@ -41,7 +42,7 @@ function Register(props) {
                 </label>
                 <label className="register__field">
                     E-mail
-                    <input className="register__input register__input_email" type="email" 
+                    <input className="register__input register__input_email" type="email" pattern={EMAIL_REGEX}
                     name="email" placeholder="Почта" required value={formValue.email} onChange={handleChange} />
                     <span className="register__input-error email-input-error">{errors.email}</span>
                 </label>

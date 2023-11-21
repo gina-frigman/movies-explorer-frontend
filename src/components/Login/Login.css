@@ -59,7 +59,6 @@
 }
 
 .login__input-error {
-    visibility: hidden;
     max-width: 396px;
     color: #EE3465;
     font-weight: 400;
