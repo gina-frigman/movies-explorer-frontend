@@ -45,7 +45,7 @@ function Login(props) {
                     <span className="login__input-error password-input-error">{errors.password}</span>
                 </label>
                 <button type="submit" className={`login__submit ${!noErrors ? "login__submit_disabled" : ""}`} 
-                onClick={handleSubmit} disabled={noErrors ? false : true}>Войти</button>
+                onClick={handleSubmit} disabled={!noErrors}>Войти</button>
             </form>
             <div className="login__container">
                 <p className="login__text">Ещё не зарегистрированы?</p>

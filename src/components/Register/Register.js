@@ -54,7 +54,7 @@ function Register(props) {
                 </label>
                 <span className="register__input-error submit-error">{props.errMessage}</span> 
                 <button type="submit" className={`register__submit ${!noErrors ? "register__submit_disabled" : ""}`} 
-                onClick={handleSubmit} disabled={noErrors ? false : true}>Зарегистрироваться</button>
+                onClick={handleSubmit} disabled={!noErrors}>Зарегистрироваться</button>
             </form>
             <div className="register__container">
                 <p className="register__text">Уже зарегистрированы?</p>

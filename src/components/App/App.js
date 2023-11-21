@@ -149,9 +149,9 @@ function App() {
             }
         })
         .catch(err => {
+            setIsLoading(false)
             if (err === "ошибка 409") {
                 navigate("/profile", {replace: true})
-                setIsLoading(false)
                 setIsSuccess(false)
                 setErrMessage(EXISTING_EMAIL_ERR)
             } else {
@@ -246,7 +246,7 @@ function App() {
                     <Route path="/signin" element={<Login onSubmit={handleLogin} errMessage={errMessage} />} />
                     <Route path="/movies" element={<ProtectedRoute element={Movies} cards={cards} isLoggedIn={isLoggedIn} onLike={handleLikeMovie} 
                     onMoreClick={handleMoreClick} onSearch={handleSearchMovies} movies={movies} errMessage={errMessage} isLoading={isLoading} 
-                    likedMovies={likedMovies} />} />
+                    likedMovies={allLikedMovies} />} />
                     <Route path="/saved-movies" element={<ProtectedRoute element={SavedMovies} isLoggedIn={isLoggedIn} onDelete={handleDeleteSavedMovie} 
                     onMoreClick={handleMoreClick} onSearch={handleSearchMovies} errMessage={errMessage} isLoading={isLoading} cards={cards} 
                     likedMovies={allLikedMovies} movies={likedMovies} />} />

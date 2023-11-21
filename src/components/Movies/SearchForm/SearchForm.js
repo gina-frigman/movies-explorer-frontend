@@ -1,15 +1,16 @@
 import React from "react";
 import "./SearchForm.css"
 import { KEY_WORDS_ERR } from "../../../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 function SearchForm(props) {
     const [formValue, setFormValue] = React.useState({searchValue: ""})
     const [filter, setFilter] = React.useState(false)
     const [likedFormValue, setLikedFormValue] = React.useState({searchValue: ""})
     const [likedFilter, setLikedFilter] = React.useState(false)
-
     const [isDisabled, setIsDisabled] = React.useState(false)
     const [errMessage, setErrMessage] = React.useState("")
+    const navigate = useNavigate();
 
     function handleChange(evt) {
         const {name, value} = evt.target
@@ -30,9 +31,11 @@ function SearchForm(props) {
             setFilter(isChecked)
         }
         setErrMessage(props.errMessage)
-    }, [])
+    }, [navigate])
+    console.log(filter, localStorage.filter)
 
     function handleSubmit(evt) {
+        console.log(filter)
         evt.preventDefault()
         if (props.moviespath) {
             if ((formValue.searchValue === "")) {
@@ -41,10 +44,11 @@ function SearchForm(props) {
                 if (evt.target.className === "search__checkbox") {
                     setTimeout(setFilter, 100, !filter)
                     props.onSubmit(formValue.searchValue, !filter)
+                    localStorage.setItem("filter", !filter)
                 } else {
                     props.onSubmit(formValue.searchValue, filter)
-                }                
-                localStorage.setItem("filter", !filter)
+                    localStorage.setItem("filter", filter)
+                }
                 localStorage.setItem("search", formValue.searchValue)
             }
         } else {
@@ -69,7 +73,7 @@ function SearchForm(props) {
                     <span className="search__input-error">{errMessage}</span>
                 </div>
                 <div className="search__container">
-                    <input className="search__checkbox" id="shorts" checked={props.moviespath ? filter ? true : false : likedFilter ? true : false} 
+                    <input className="search__checkbox" id="shorts" checked={props.moviespath ? (filter ? true : false) : (likedFilter ? true : false)} 
                     disabled={isDisabled && props.moviespath ? true : false} onChange={handleSubmit} type="checkbox" value="button" />
                     <label htmlFor="shorts" className="search__text">Короткометражки</label>
                 </div>

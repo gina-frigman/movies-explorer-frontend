@@ -28,11 +28,13 @@ function Profile(props) {
             email: currentUser.email,
             name: currentUser.name
         })
-        setIsSaved(localStorage.dataChanged === 'true' ? true : false)
-    }, [currentUser])
+        // not working
+        setIsSaved(localStorage.getItem('dataChanged') === 'false' ? false : true)
+    }, [currentUser, props.isLoggedIn])
 
     React.useEffect(() => {
-        localStorage.setItem('dataChanged', 'true')
+        localStorage.setItem('dataChanged', 'false')
+        console.log(localStorage)
     }, [navigate, props.isLoggedIn])
 
     React.useEffect(() => {        
