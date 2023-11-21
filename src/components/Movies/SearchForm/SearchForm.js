@@ -32,10 +32,8 @@ function SearchForm(props) {
         }
         setErrMessage(props.errMessage)
     }, [navigate])
-    console.log(filter, localStorage.filter)
 
     function handleSubmit(evt) {
-        console.log(filter)
         evt.preventDefault()
         if (props.moviespath) {
             if ((formValue.searchValue === "")) {

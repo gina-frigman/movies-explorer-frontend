@@ -53,7 +53,10 @@ function App() {
                     setErrMessage(SERVER_ERR)
                 }
             })
-        }
+        } else {
+            setIsLoggedIn(false);
+            localStorage.clear();
+          }
     }, [isLoggedIn])
 
     React.useEffect(() => {

@@ -14,6 +14,7 @@ function Profile(props) {
     });
     const [isSaved, setIsSaved] = React.useState(false)
     const [isValid, setIsValid] = React.useState(false);
+    const [isDataChanged, setIsDataChanged] = React.useState(false)
     const navigate = useNavigate();
     const [formValue, setFormValue] = React.useState({
         email: '',
@@ -28,20 +29,13 @@ function Profile(props) {
             email: currentUser.email,
             name: currentUser.name
         })
-        // not working
-        setIsSaved(localStorage.getItem('dataChanged') === 'false' ? false : true)
-    }, [currentUser, props.isLoggedIn])
+    }, [navigate])
 
     React.useEffect(() => {
-        localStorage.setItem('dataChanged', 'false')
-        console.log(localStorage)
-    }, [navigate, props.isLoggedIn])
-
-    React.useEffect(() => {        
         if (props.isSuccess) {
-            localStorage.setItem('dataChanged', 'true')            
+            setIsSaved(true)     
         } else {
-            localStorage.setItem('dataChanged', 'false')  
+            setIsSaved(false)
         }
     }, [handleSubmit])
 
@@ -61,12 +55,13 @@ function Profile(props) {
         })
         setErrors({...errors, [name]: evt.target.validationMessage });
         setIsValid(evt.target.closest("form").checkValidity());
-        console.log(evt.target.validationMessage)
     }
 
     const handleEditProfileClick = () => {
-        localStorage.setItem('dataChanged', 'false')
-        setIsSaved(false)
+        setFormValue({
+            email: currentUser.email,
+            name: currentUser.name
+        })
         setIsFormEditable(true)
     }
 
@@ -81,7 +76,7 @@ function Profile(props) {
             <Header isLoggedIn={props.isLoggedIn} />
             <main className="profile">
                 <p className="profile__input-error">{props.errMessage}</p>
-                <p className={`profile__data-saved-text ${isSaved ? "profile__data-saved-text_visible" : ""}`}>Данные успешно изменены.</p>
+                <p className={`profile__data-saved-text ${isSaved && !isFormEditable ? "profile__data-saved-text_visible" : ""}`}>Данные успешно изменены.</p>
                 <h1 className="profile__greeting">Привет, {currentUser.name}!</h1>
                 <form className="profile__form">
                     <label className="profile__field">
