@@ -1,0 +1,123 @@
+.menu {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .3);
+    z-index: 1;
+}   
+
+.menu__container {
+    width: 520px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: #202020;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menu__flexbox {
+    display: flex;
+    flex-direction: column;
+    gap: 110px;
+}
+
+.menu__close-button {
+    background-color: rgba(0, 0, 0, 0);
+    width: 28px;
+    height: 28px;
+    align-self: flex-end;
+    margin: 23px 23px 0 0;
+    background-image: url("./../../images/close.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 0;
+    cursor: pointer;
+}
+
+.menu__close-button:hover {
+    opacity: .7;
+    transition: opacity ease-out .3s;
+}
+
+.menu__links {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    align-items: center;
+}
+
+.menu__link {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+}
+
+.menu__link_active {
+    padding-bottom: 4px;
+    border-bottom: 2px solid #fff;
+}
+
+.menu__link:hover {
+    opacity: .7;
+    transition: opacity ease-out .3s;
+}
+
+.menu__profile {
+    margin: 0 auto 90px;
+    display: flex;
+    align-items: center;
+    height: 32px;
+}
+
+.menu__profile-button {
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 12px;
+    margin-right: 7px;
+}
+
+.menu__profile-button:hover {
+    opacity: .7;
+    transition: opacity ease-out .3s;
+}
+
+.menu__icon {
+    object-fit: none;
+    width: 26px;
+    height: 26px;
+    background-color: #313131;
+    border-radius: 50px;
+}
+
+@media screen and (max-width: 767px) {
+    .menu__container {
+        width: 100vw;
+        gap: 100px;
+    }
+
+    .menu__flexbox {
+        gap: 103px;
+    }
+
+    .menu__close-button {
+        margin-top: 15px;
+        margin-right: 15px;
+    }
+
+    .menu__links {
+        gap: 24px;
+    }
+
+    .menu__profile {
+        margin-bottom: 46px;
+    }
+}
